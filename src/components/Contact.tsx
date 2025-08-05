@@ -15,7 +15,7 @@ const Contact = () => {
     {
       icon: <Mail className="h-6 w-6" />,
       title: "Email",
-      details: ["info@serviceshub.com", "sales@serviceshub.com"]
+      details: ["suliaman55019@gmail.com", "info@serviceshub.com"]
     },
     {
       icon: <MapPin className="h-6 w-6" />,

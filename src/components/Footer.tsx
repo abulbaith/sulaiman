@@ -39,7 +39,7 @@ const Footer = () => {
               <li>Faringada Jos North</li>
               <li>Plateau State, Nigeria</li>
               <li>+2348101456662</li>
-              <li>info@serviceshub.com</li>
+              <li>suliaman55019@gmail.com</li>
             </ul>
           </div>
         </div>
