@@ -36,8 +36,8 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Contact</h4>
             <ul className="space-y-2 text-background/80">
-              <li>123 Automotive Street</li>
-              <li>City, State 12345</li>
+              <li>Faringada Jos North</li>
+              <li>Plateau State, Nigeria</li>
               <li>+2348101456662</li>
               <li>info@serviceshub.com</li>
             </ul>

@@ -20,7 +20,7 @@ const Contact = () => {
     {
       icon: <MapPin className="h-6 w-6" />,
       title: "Location",
-      details: ["123 Automotive Street", "City, State 12345"]
+      details: ["Faringada Jos North", "Plateau State, Nigeria"]
     },
     {
       icon: <Clock className="h-6 w-6" />,
