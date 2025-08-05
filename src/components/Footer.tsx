@@ -38,7 +38,7 @@ const Footer = () => {
             <ul className="space-y-2 text-background/80">
               <li>123 Automotive Street</li>
               <li>City, State 12345</li>
-              <li>+1 (555) 123-4567</li>
+              <li>+2348101456662</li>
               <li>info@serviceshub.com</li>
             </ul>
           </div>
