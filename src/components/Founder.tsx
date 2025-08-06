@@ -14,7 +14,7 @@ const Founder = () => {
         <div className="max-w-4xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="order-2 lg:order-1 animate-slide-in-left">
-              <h3 className="text-2xl md:text-3xl font-bold mb-6">Sulaiman Hassan</h3>
+              <h3 className="text-2xl md:text-3xl font-bold mb-6">SULAIMAN SAEED SULAIMAN</h3>
               <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
                 With over a decade of experience in the Nigerian automotive industry, Sulaiman has built 
                 Services Hub from the ground up. Starting from Jos, Plateau State, he has expanded operations 
@@ -46,7 +46,7 @@ const Founder = () => {
                 <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent rounded-2xl transform rotate-3"></div>
                 <img 
                   src="/lovable-uploads/b75f6296-31fd-457e-bd95-7a66397282fd.png" 
-                  alt="Sulaiman Hassan - Founder of Services Hub"
+                  alt="SULAIMAN SAEED SULAIMAN - Founder of Services Hub"
                   className="relative w-full h-96 object-cover rounded-2xl shadow-2xl"
                 />
               </div>
