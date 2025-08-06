@@ -32,7 +32,7 @@ const Navigation = () => {
                 {item.label}
               </a>
             ))}
-            <Button size="sm">Get Quote</Button>
+            <Button size="sm" onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>Get Quote</Button>
           </div>
           
           {/* Mobile Menu Button */}
@@ -58,7 +58,7 @@ const Navigation = () => {
                   {item.label}
                 </a>
               ))}
-              <Button size="sm" className="w-fit">Get Quote</Button>
+              <Button size="sm" className="w-fit" onClick={() => { document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); setIsMenuOpen(false); }}>Get Quote</Button>
             </div>
           </div>
         )}

@@ -22,10 +22,10 @@ const Hero = () => {
           vehicles, and comprehensive automotive solutions.
         </p>
         <div className="space-x-4 animate-fade-in-up [animation-delay:0.4s]">
-          <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4">
+          <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4" onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}>
             Our Services
           </Button>
-          <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-black px-8 py-4">
+          <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-black px-8 py-4" onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}>
             Contact Us
           </Button>
         </div>

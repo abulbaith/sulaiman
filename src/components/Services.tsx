@@ -8,25 +8,25 @@ const Services = () => {
     {
       icon: <ShoppingCart className="h-8 w-8 text-primary" />,
       title: "Spare Parts Trading",
-      description: "High-quality automotive spare parts for all vehicle makes and models. We stock everything from engine components to electrical parts.",
+      description: "Genuine automotive spare parts for all vehicle makes and models across Nigeria. From Lagos to Abuja, we deliver quality engine components to electrical parts nationwide.",
       image: sparePartsImage
     },
     {
       icon: <Car className="h-8 w-8 text-primary" />,
       title: "Vehicle Sales",
-      description: "Buy and sell cars with confidence. We deal in both new and used vehicles, ensuring quality and fair pricing for all transactions.",
+      description: "Nigeria's trusted vehicle marketplace. Buy and sell cars across all states with confidence. We ensure quality vehicles and fair pricing for every Nigerian customer.",
       image: carLotImage
     },
     {
       icon: <Recycle className="h-8 w-8 text-primary" />,
       title: "Condemned Vehicle Recovery",
-      description: "Specialized in handling condemned and salvage vehicles. We provide environmentally responsible disposal and parts recovery services.",
+      description: "Licensed condemned vehicle recovery across Nigeria. We provide environmentally responsible disposal following Nigerian environmental standards and parts recovery services.",
       image: carLotImage
     },
     {
       icon: <Wrench className="h-8 w-8 text-primary" />,
       title: "Mechanical Services",
-      description: "Professional automotive repair and maintenance services. Our experienced mechanics handle everything from routine maintenance to complex repairs.",
+      description: "Professional automotive repair and maintenance in Jos, Plateau State. Our certified Nigerian mechanics handle everything from routine maintenance to complex repairs with genuine parts.",
       image: sparePartsImage
     }
   ];

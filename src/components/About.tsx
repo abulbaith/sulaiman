@@ -3,12 +3,12 @@ import { CheckCircle } from "lucide-react";
 
 const About = () => {
   const features = [
-    "Over 15 years of automotive experience",
-    "Certified mechanics and technicians",
-    "Quality guaranteed parts and services",
-    "Competitive pricing on all solutions",
-    "Environmental responsibility in all operations",
-    "24/7 emergency roadside assistance"
+    "Over 15 years serving Nigeria's automotive industry",
+    "NIAE certified mechanics and technicians",
+    "Genuine parts guaranteed with warranty",
+    "Best prices across all Nigerian states",
+    "Environmental compliance with Nigerian standards",
+    "24/7 emergency support nationwide"
   ];
 
   return (
@@ -21,15 +21,14 @@ const About = () => {
               Your Trusted Automotive Partner
             </h2>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-              Services Hub has been serving the automotive community with dedication and expertise. 
-              We specialize in the complete automotive ecosystem - from spare parts trading to vehicle 
-              sales and mechanical services. Our commitment to quality and customer satisfaction has 
-              made us a trusted name in the industry.
+              Based in Jos, Plateau State, Services Hub has been serving Nigeria's automotive community 
+              with dedication and expertise. We specialize in the complete automotive ecosystem - from 
+              genuine spare parts trading to vehicle sales and professional mechanical services across Nigeria.
             </p>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-              Whether you're looking to buy or sell vehicles, need quality spare parts, or require 
-              professional mechanical services, Services Hub is your one-stop solution for all 
-              automotive needs.
+              Whether you're in Lagos, Abuja, Port Harcourt, or anywhere in Nigeria, Services Hub is your 
+              trusted partner for quality vehicles, genuine parts, and professional automotive services 
+              that meet international standards.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {features.map((feature, index) => (
