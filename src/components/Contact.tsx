@@ -1,11 +1,72 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { useToast } from "@/hooks/use-toast";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 
 const Contact = () => {
+  const { toast } = useToast();
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    service: "",
+    message: ""
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [id]: value
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Validate required fields
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.message) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in all required fields.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Create submission object
+    const submission = {
+      id: Date.now().toString(),
+      ...formData,
+      submittedAt: new Date().toISOString()
+    };
+
+    // Save to localStorage
+    const existingSubmissions = JSON.parse(localStorage.getItem("contactSubmissions") || "[]");
+    existingSubmissions.push(submission);
+    localStorage.setItem("contactSubmissions", JSON.stringify(existingSubmissions));
+
+    // Reset form
+    setFormData({
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      service: "",
+      message: ""
+    });
+
+    toast({
+      title: "Message Sent!",
+      description: "Thank you for contacting us. We'll get back to you soon.",
+    });
+  };
+
   const contactInfo = [
     {
       icon: <Phone className="h-6 w-6" />,
@@ -46,46 +107,78 @@ const Contact = () => {
               <CardTitle className="text-2xl">Send Us a Message</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="firstName">First Name</Label>
-                  <Input id="firstName" placeholder="John" />
+              <form onSubmit={handleSubmit}>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="firstName">First Name *</Label>
+                    <Input 
+                      id="firstName" 
+                      placeholder="John" 
+                      value={formData.firstName}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="lastName">Last Name *</Label>
+                    <Input 
+                      id="lastName" 
+                      placeholder="Doe" 
+                      value={formData.lastName}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="lastName">Last Name</Label>
-                  <Input id="lastName" placeholder="Doe" />
+                <div className="space-y-2 mb-6">
+                  <Label htmlFor="email">Email *</Label>
+                  <Input 
+                    id="email" 
+                    type="email" 
+                    placeholder="john@example.com" 
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                  />
                 </div>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="john@example.com" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="phone">Phone</Label>
-                <Input id="phone" type="tel" placeholder="+1 (555) 123-4567" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="service">Service Interested In</Label>
-                <select 
-                  id="service" 
-                  className="w-full px-3 py-2 border border-input rounded-md bg-background text-foreground"
-                >
-                  <option>Select a service</option>
-                  <option>Spare Parts</option>
-                  <option>Vehicle Sales</option>
-                  <option>Mechanical Services</option>
-                  <option>Condemned Vehicle Recovery</option>
-                </select>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="message">Message</Label>
-                <Textarea 
-                  id="message" 
-                  placeholder="Tell us about your automotive needs..."
-                  rows={4}
-                />
-              </div>
-              <Button className="w-full">Send Message</Button>
+                <div className="space-y-2 mb-6">
+                  <Label htmlFor="phone">Phone</Label>
+                  <Input 
+                    id="phone" 
+                    type="tel" 
+                    placeholder="+234 xxx xxx xxxx" 
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                  />
+                </div>
+                <div className="space-y-2 mb-6">
+                  <Label htmlFor="service">Service Interested In</Label>
+                  <select 
+                    id="service" 
+                    className="w-full px-3 py-2 border border-input rounded-md bg-background text-foreground"
+                    value={formData.service}
+                    onChange={handleInputChange}
+                  >
+                    <option value="">Select a service</option>
+                    <option value="Spare Parts">Spare Parts</option>
+                    <option value="Vehicle Sales">Vehicle Sales</option>
+                    <option value="Mechanical Services">Mechanical Services</option>
+                    <option value="Condemned Vehicle Recovery">Condemned Vehicle Recovery</option>
+                  </select>
+                </div>
+                <div className="space-y-2 mb-6">
+                  <Label htmlFor="message">Message *</Label>
+                  <Textarea 
+                    id="message" 
+                    placeholder="Tell us about your automotive needs..."
+                    rows={4}
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                <Button type="submit" className="w-full">Send Message</Button>
+              </form>
             </CardContent>
           </Card>
           
