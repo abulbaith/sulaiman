@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       contact_submissions: {
         Row: {
+          action_token: string
           email: string
           first_name: string
           id: string
@@ -23,9 +24,11 @@ export type Database = {
           message: string
           phone: string | null
           service: string | null
+          status: string
           submitted_at: string
         }
         Insert: {
+          action_token?: string
           email: string
           first_name: string
           id?: string
@@ -33,9 +36,11 @@ export type Database = {
           message: string
           phone?: string | null
           service?: string | null
+          status?: string
           submitted_at?: string
         }
         Update: {
+          action_token?: string
           email?: string
           first_name?: string
           id?: string
@@ -43,6 +48,7 @@ export type Database = {
           message?: string
           phone?: string | null
           service?: string | null
+          status?: string
           submitted_at?: string
         }
         Relationships: []
