@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const Contact = () => {
   const { toast } = useToast();
@@ -17,6 +18,7 @@ const Contact = () => {
     service: "",
     message: ""
   });
+  const [submitting, setSubmitting] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { id, value } = e.target;
@@ -26,45 +28,55 @@ const Contact = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Validate required fields
+
     if (!formData.firstName || !formData.lastName || !formData.email || !formData.message) {
       toast({
         title: "Missing Information",
         description: "Please fill in all required fields.",
-        variant: "destructive"
+        variant: "destructive",
       });
       return;
     }
 
-    // Create submission object
-    const submission = {
-      id: Date.now().toString(),
-      ...formData,
-      submittedAt: new Date().toISOString()
-    };
+    try {
+      setSubmitting(true);
+      const { error } = await supabase.from("contact_submissions").insert({
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        email: formData.email,
+        phone: formData.phone || null,
+        service: formData.service || null,
+        message: formData.message,
+      });
 
-    // Save to localStorage
-    const existingSubmissions = JSON.parse(localStorage.getItem("contactSubmissions") || "[]");
-    existingSubmissions.push(submission);
-    localStorage.setItem("contactSubmissions", JSON.stringify(existingSubmissions));
+      if (error) {
+        throw error;
+      }
 
-    // Reset form
-    setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      service: "",
-      message: ""
-    });
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        service: "",
+        message: "",
+      });
 
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for contacting us. We'll get back to you soon.",
-    });
+      toast({
+        title: "Message Sent!",
+        description: "Thank you for contacting us. We'll get back to you soon.",
+      });
+    } catch (err: any) {
+      toast({
+        title: "Submission failed",
+        description: err.message || "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -177,7 +189,9 @@ const Contact = () => {
                     required
                   />
                 </div>
-                <Button type="submit" className="w-full">Send Message</Button>
+                <Button type="submit" className="w-full" disabled={submitting}>
+                  {submitting ? "Sending..." : "Send Message"}
+                </Button>
               </form>
             </CardContent>
           </Card>
