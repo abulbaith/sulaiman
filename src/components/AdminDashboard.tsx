@@ -10,57 +10,37 @@ import {
   TableHeader, 
   TableRow 
 } from "@/components/ui/table";
-import { Trash2, Eye, Users, MessageSquare, Calendar } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-
-interface ContactSubmission {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  service: string;
-  message: string;
-  submittedAt: string;
-}
+import { Eye, Users, MessageSquare, Calendar } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import type { Tables } from "@/integrations/supabase/types";
+type ContactSubmission = Tables<"contact_submissions">;
 
 const AdminDashboard = () => {
-  const { toast } = useToast();
   const [submissions, setSubmissions] = useState<ContactSubmission[]>([]);
   const [selectedSubmission, setSelectedSubmission] = useState<ContactSubmission | null>(null);
-
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   useEffect(() => {
-    loadSubmissions();
+    const fetchSubmissions = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("contact_submissions")
+          .select("*")
+          .order("submitted_at", { ascending: false });
+        if (error) {
+          setError(error.message);
+        } else {
+          setSubmissions(data || []);
+        }
+      } catch (e) {
+        setError("Failed to load submissions.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchSubmissions();
   }, []);
 
-  const loadSubmissions = () => {
-    const stored = localStorage.getItem("contactSubmissions");
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      setSubmissions(parsed.sort((a: ContactSubmission, b: ContactSubmission) => 
-        new Date(b.submittedAt).getTime() - new Date(a.submittedAt).getTime()
-      ));
-    }
-  };
-
-  const deleteSubmission = (id: string) => {
-    const updated = submissions.filter(sub => sub.id !== id);
-    setSubmissions(updated);
-    localStorage.setItem("contactSubmissions", JSON.stringify(updated));
-    toast({
-      title: "Submission Deleted",
-      description: "Contact submission has been removed.",
-    });
-  };
-
-  const clearAllSubmissions = () => {
-    setSubmissions([]);
-    localStorage.removeItem("contactSubmissions");
-    toast({
-      title: "All Submissions Cleared",
-      description: "All contact submissions have been removed.",
-    });
-  };
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -75,7 +55,7 @@ const AdminDashboard = () => {
   const getStats = () => {
     const today = new Date().toDateString();
     const todaySubmissions = submissions.filter(sub => 
-      new Date(sub.submittedAt).toDateString() === today
+      new Date(sub.submitted_at).toDateString() === today
     );
     
     const serviceStats = submissions.reduce((acc, sub) => {
@@ -111,9 +91,9 @@ const AdminDashboard = () => {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
-                <span>{selectedSubmission.firstName} {selectedSubmission.lastName}</span>
+                <span>{selectedSubmission.first_name} {selectedSubmission.last_name}</span>
                 <Badge variant="secondary">
-                  {formatDate(selectedSubmission.submittedAt)}
+                  {formatDate(selectedSubmission.submitted_at)}
                 </Badge>
               </CardTitle>
             </CardHeader>
@@ -152,15 +132,6 @@ const AdminDashboard = () => {
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-          <div className="flex gap-2">
-            <Button 
-              variant="destructive" 
-              onClick={clearAllSubmissions}
-              disabled={submissions.length === 0}
-            >
-              Clear All
-            </Button>
-          </div>
         </div>
 
         {/* Stats Cards */}
